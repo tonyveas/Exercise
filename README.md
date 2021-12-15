@@ -27,8 +27,7 @@ OUTPUT:
 RENE-ASTRID: 3
 
 ## Content
-This proyect has two branches: develop1 and develop2. **develop1** contains the tests of the repositories and **develop2** contains the test of the use cases.
-Este repositorio contiene la resolución del ejercicio de frecuencias de los empleados.
+This repository contains the resolution of the employee frequency exercise.
 
 ## Explanation
 For the solution of the exercise, the Java programming language was used, together with the object-oriented paradigm.
