@@ -1,0 +1,11 @@
+package test;
+
+import servicio.Frecuencias;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		String rutaArchivo = "src/archivos/file.txt";
+		Frecuencias.frecuencias(rutaArchivo);
+	}
+}

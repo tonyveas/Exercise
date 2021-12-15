@@ -1,0 +1,79 @@
+package test;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class Principal2 {
+
+	public static void main(String[] args) {
+		try {
+			// String fecha1 = "10:15-12:00";
+			// String fecha2 = "10:00-12:00";
+			String fecha1 = "10:15-12:00";
+			String fecha2 = "10:00-12:00";
+
+			if (fecha1.equals(fecha2)) {
+				System.out.println("IGUAL");
+			} else {
+
+				String[] fecha1Arr = fecha1.split("-");
+				String[] fecha2Arr = fecha2.split("-");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+				System.out.println("fecha1Arr: " + fecha1Arr[0] + "," + fecha1Arr[1]);
+				System.out.println("fecha2Arr: " + fecha2Arr[0] + "," + fecha2Arr[1]);
+				// System.out.println((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0]))));
+				// System.out.println((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0]))));
+
+				if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) == 0)
+						&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) > 0)) {
+					// [10:15, 12:00]
+					// [10:00, 12:00]
+					System.out.println("CASO 1");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado uno es igual a la primera hora del horario de trabajo del empleado dos");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado uno es después a la segunda hora del horario de trabajo del empleado dos");
+				} else if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) < 0)
+						&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) > 0)) {
+					System.out.println("CASO 2");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado uno es antes de la primera hora del horario de trabajo del empleado dos");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado uno es después a la segunda hora del horario de trabajo del empleado dos");
+				} else if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) < 0)
+						&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) == 0)) {
+					System.out.println("CASO 3");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado uno es antes a la primera hora del horario de trabajo del empleado dos");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado uno es igual a la segunda hora del horario de trabajo del empleado dos");
+				} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) == 0)
+						&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) > 0)) {
+					System.out.println("CASO 4");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado dos es igual a la primera hora del horario de trabajo del empleado uno");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado dos es después de la segunda hora del horario de trabajo del empleado uno");
+				} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) < 0)
+						&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) > 0)) {
+					System.out.println("CASO 5");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado dos es antes a la primera hora del horario de trabajo del empleado uno");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado dos es después de la segunda hora del horario de trabajo del empleado uno");
+				} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) < 0)
+						&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) == 0)) {
+					System.out.println("CASO 6");
+					System.out.println(
+							"Primera hora del horario de trabajo del empleado dos es antes de la primera hora del horario de trabajo del empleado uno");
+					System.out.println(
+							"Segunda hora del horario de trabajo del empleado dos es igual a la segunda hora del horario de trabajo del empleado uno");
+				}
+			}
+
+		} catch (ParseException ex) {
+		}
+
+	}
+
+}

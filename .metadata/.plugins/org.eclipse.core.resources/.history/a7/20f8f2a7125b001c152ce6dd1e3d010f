@@ -1,0 +1,43 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		ManejadorArchivos.imprimirMapa();
+
+		try {
+			map = ManejadorArchivos.leer();
+			System.out.println(map);
+			/*
+			 * ArrayList<String> comunes = Frecuencias.comunes(map.get("RENE"),
+			 * map.get("ASTRID")); System.out.println(comunes); //
+			 * ArrayList<String> comunes =
+			 * Frecuencias.comunes(map.get("ASTRID"), map.get("ANDRES"));
+			 * comunes = Frecuencias.comunes(map.get("ASTRID"),
+			 * map.get("ANDRES")); System.out.println(comunes); comunes =
+			 * Frecuencias.comunes(map.get("RENE"), map.get("ANDRES"));
+			 * System.out.println(comunes);
+			 */
+
+			HashMap<String, String[]> horarios1 = new HashMap<String, String[]>();
+			horarios1.put("RENE", map.get("RENE"));
+			HashMap<String, String[]> horarios2 = new HashMap<String, String[]>();
+			horarios2.put("ASTRID", map.get("ASTRID"));
+
+			HashMap<String, ArrayList<String>> comunes = Frecuencias.comunes(horarios1, horarios2);
+
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

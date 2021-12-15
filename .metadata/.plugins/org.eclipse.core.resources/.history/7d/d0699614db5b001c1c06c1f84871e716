@@ -1,0 +1,14 @@
+package test;
+
+import junit.framework.TestCase;
+
+public class TestFrecuencias extends TestCase {
+	// private static final String ROOT="C:\\Users\\AdminCMC\\Downloads";
+	private static final String ROOT = "C:\\Users\\tonyv\\OneDrive\\Documentos\\JavaVirtual\\Eval1\\archivos";
+
+	public void testLeer() {
+		assertEquals(4, 1 + (5 - 2));
+		assertEquals(4 - 1, 1 + (5 - 2) - 1);
+
+	}
+}

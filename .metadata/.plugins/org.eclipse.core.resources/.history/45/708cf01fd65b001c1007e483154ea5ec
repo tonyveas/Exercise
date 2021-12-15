@@ -1,0 +1,15 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		Frecuencias.frecuencias();
+	}
+}

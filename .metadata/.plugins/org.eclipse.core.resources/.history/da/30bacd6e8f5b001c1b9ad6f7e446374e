@@ -1,0 +1,14 @@
+package test;
+
+import java.util.Date;
+
+public class TestF {
+
+	public static void main(String[] args) {
+		Date date = new Date();
+		Date date2 = new Date();
+		System.out.println(date.equals(date2));
+
+	}
+
+}

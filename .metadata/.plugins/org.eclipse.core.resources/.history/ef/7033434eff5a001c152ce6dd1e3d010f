@@ -1,0 +1,107 @@
+package servicio;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import utils.ArchivoException;
+
+public class ManejadorArchivos {
+
+	public static void imprimirMapa() {
+		String cadena = "{\n";
+		try {
+			HashMap<String, String[]> mapa = leer();
+			for (String s : mapa.keySet()) {
+				String temp = "";
+				temp = temp + s + "=";
+				String[] horarios = mapa.get(s);
+
+				for (int i = 0; i < horarios.length; i++) {
+					if (i == horarios.length - 1) {
+						temp = temp + horarios[i]+",";
+					} else {
+						temp = temp + horarios[i];
+					}
+				}
+				// cadena = "\t"+cadena + temp + ";\n";
+				cadena = cadena+ "\t" + temp + ";\n";
+			}
+			cadena = cadena.substring(0, cadena.length() - 2);
+			cadena = cadena + "\n}";
+			System.out.println(cadena);
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static HashMap<String, String[]> leer() throws ArchivoException {
+		//
+		String rutaArchivo = "src/archivos/file.txt";
+		HashMap<String, String[]> map = new HashMap<String, String[]>();
+		File file = new File(rutaArchivo);
+		System.out.println(file.getAbsolutePath());
+		System.out.println("RUTA:" + file.getAbsolutePath());
+		FileReader fileReader = null;
+		BufferedReader br = null;
+		String linea = "";
+		String[] data;
+		String[] horarios;
+		try {
+			fileReader = new FileReader(file);
+			br = new BufferedReader(fileReader);
+			while ((linea = br.readLine()) != null) {
+				data = linea.split("=");
+				horarios = data[1].split(",");
+				map.put(data[0], horarios);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("No existe el archivo");
+			throw new ArchivoException("No existe el archivo " + rutaArchivo);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Error al leer el archivo");
+			throw new ArchivoException("Error al leer el archivo " + rutaArchivo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error");
+			throw new ArchivoException("Error");
+		} finally {
+
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Error al cerrar el BufferedReader br ");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error");
+			}
+
+			try {
+				if (fileReader != null) {
+					fileReader.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Error al cerrar el FileReader fileReader ");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error");
+			}
+
+		}
+		return map;
+
+	}
+
+}

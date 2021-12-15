@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="servicio.ManejadorArchivos"/>
+<fullyQualifiedTypeName name="servicio.Frecuencias"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="utils.DateUtil"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="servicios.ManejadorArchivos"/>
+</qualifiedTypeNameHistroy>

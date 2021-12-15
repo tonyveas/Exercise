@@ -1,0 +1,47 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		// ManejadorArchivos.imprimirMapa();
+
+		try {
+			map = ManejadorArchivos.leer();
+			System.out.println("\n");
+			HashMap<String, ArrayList<String>> frecuencias = new HashMap<String, ArrayList<String>>();
+			for (String nombreEmpleado1 : map.keySet()) {
+				HashMap<String, String[]> horarios1temp = new HashMap<String, String[]>();
+				horarios1temp.put(nombreEmpleado1, map.get(nombreEmpleado1));
+				for (String nombreEmpleado2 : map.keySet()) {
+					HashMap<String, String[]> horarios2temp = new HashMap<String, String[]>();
+					horarios2temp.put(nombreEmpleado2, map.get(nombreEmpleado2));
+					HashMap<String, ArrayList<String>> comunesHorarios = Frecuencias.comunes(horarios1temp,
+							horarios2temp);
+					if (!comunesHorarios.isEmpty()) {
+						// System.out.println(comunesHorarios);
+						for (String s : comunesHorarios.keySet()) {
+							if (!Frecuencias.comparar(s, frecuencias)) {
+								frecuencias.put(s, comunesHorarios.get(s));
+							}
+						}
+					}
+				}
+			}
+
+			System.out.println(frecuencias);
+
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

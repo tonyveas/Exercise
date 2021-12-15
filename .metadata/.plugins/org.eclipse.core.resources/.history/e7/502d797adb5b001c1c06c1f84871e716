@@ -1,0 +1,18 @@
+package test;
+
+import servicio.Frecuencias;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		System.out.println("PRUEBA 1");
+		String rutaArchivo = "src/archivos/file.txt";
+		Frecuencias.frecuencias(rutaArchivo);
+		System.out.println("\nPRUEBA 2");
+		rutaArchivo = "src/archivos/file2.txt";
+		Frecuencias.frecuencias(rutaArchivo);
+		System.out.println("\nPRUEBA 3");
+		rutaArchivo = "src/archivos/file3.txt";
+		Frecuencias.frecuencias(rutaArchivo);
+	}
+}

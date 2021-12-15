@@ -1,0 +1,15 @@
+package test;
+
+import java.util.HashMap;
+
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		ManejadorArchivos.imprimirMapa();
+	}
+
+}

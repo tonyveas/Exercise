@@ -1,0 +1,31 @@
+package test;
+
+import java.text.ParseException;
+import java.util.Date;
+
+import utils.DateUtil;
+
+public class TestF {
+
+	public static void main(String[] args) {
+		Date date = new Date();
+		Date date2 = new Date();
+		System.out.println("Date: " + date);
+		System.out.println("Date2: " + date2);
+		System.out.println(date.equals(date2));
+		Date date3 = null;
+		Date date4 = null;
+
+		try {
+			date3 = DateUtil.convertirDate("10:00");
+			date4 = DateUtil.convertirDate("10:00");
+			System.out.println(date3);
+			System.out.println(date4);
+			System.out.println(date3==date4);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

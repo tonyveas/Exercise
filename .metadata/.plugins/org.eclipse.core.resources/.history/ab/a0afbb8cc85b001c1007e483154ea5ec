@@ -1,0 +1,73 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		// ManejadorArchivos.imprimirMapa();
+
+		try {
+			map = ManejadorArchivos.leer();
+			// System.out.println(map);
+			/*
+			 * ArrayList<String> comunes = Frecuencias.comunes(map.get("RENE"),
+			 * map.get("ASTRID")); System.out.println(comunes); //
+			 * ArrayList<String> comunes =
+			 * Frecuencias.comunes(map.get("ASTRID"), map.get("ANDRES"));
+			 * comunes = Frecuencias.comunes(map.get("ASTRID"),
+			 * map.get("ANDRES")); System.out.println(comunes); comunes =
+			 * Frecuencias.comunes(map.get("RENE"), map.get("ANDRES"));
+			 * System.out.println(comunes);
+			 */
+
+			HashMap<String, String[]> horarios1 = new HashMap<String, String[]>();
+			horarios1.put("RENE", map.get("RENE"));
+			HashMap<String, String[]> horarios2 = new HashMap<String, String[]>();
+			horarios2.put("ASTRID", map.get("ASTRID"));
+			HashMap<String, ArrayList<String>> comunes = Frecuencias.comunes(horarios1, horarios2);
+			System.out.println(comunes);
+
+			horarios1 = new HashMap<String, String[]>();
+			horarios1.put("ASTRID", map.get("ASTRID"));
+			horarios2 = new HashMap<String, String[]>();
+			horarios2.put("ANDRES", map.get("ANDRES"));
+			comunes = Frecuencias.comunes(horarios1, horarios2);
+			System.out.println(comunes);
+
+			horarios1 = new HashMap<String, String[]>();
+			horarios1.put("RENE", map.get("RENE"));
+			horarios2 = new HashMap<String, String[]>();
+			horarios2.put("ANDRES", map.get("ANDRES"));
+			comunes = Frecuencias.comunes(horarios1, horarios2);
+			System.out.println(comunes);
+
+			System.out.println("\n");
+
+			HashMap<String, ArrayList<String>> frecuencias = new HashMap<String, ArrayList<String>>();
+			
+			for (String nombreEmpleado1 : map.keySet()) {
+				HashMap<String, String[]> horarios1temp = new HashMap<String, String[]>();
+				horarios1temp.put(nombreEmpleado1, map.get(nombreEmpleado1));
+				for (String nombreEmpleado2 : map.keySet()) {
+					HashMap<String, String[]> horarios2temp = new HashMap<String, String[]>();
+					horarios2temp.put(nombreEmpleado2, map.get(nombreEmpleado2));
+					HashMap<String, ArrayList<String>> comunesHorarios = Frecuencias.comunes(horarios1temp, horarios2temp);
+					System.out.println(comunesHorarios);
+				}
+
+			}
+
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

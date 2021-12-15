@@ -1,0 +1,27 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		ManejadorArchivos.imprimirMapa();
+
+		try {
+			map = ManejadorArchivos.leer();
+			System.out.println(map);
+			ArrayList<String> comunes = Frecuencias.comunes(map.get("RENE"), map.get("ASTRID"));
+			System.out.println(comunes);
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

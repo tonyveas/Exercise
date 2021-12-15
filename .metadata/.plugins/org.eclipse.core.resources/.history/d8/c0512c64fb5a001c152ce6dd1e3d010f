@@ -1,0 +1,23 @@
+package test;
+
+import java.util.HashMap;
+
+import servicio.ManejadorArchivos;
+import utils.ArchivoException;
+
+public class Test {
+
+	public static void main(String[] args) {
+		HashMap<String, String[]> map = null;
+		try {
+			map = ManejadorArchivos.leer();
+			for (String s : map.get("RENE")) {
+				System.out.println(s);
+			}
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+
+}

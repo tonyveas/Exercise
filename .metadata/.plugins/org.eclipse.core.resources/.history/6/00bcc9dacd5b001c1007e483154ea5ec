@@ -1,0 +1,292 @@
+package servicio;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import utils.ArchivoException;
+
+public class Frecuencias {
+
+	private HashMap<String, String[]> horariosEmpleados = new HashMap<String, String[]>();
+	private HashMap<String, Integer> frecuencias = new HashMap<String, Integer>();
+
+	public static boolean validarRangoDeHoras(String hora1, String hora2) {
+		boolean cumpleCaso = false;
+		if (hora1.substring(0, 2).equals(hora2.substring(0, 2))) {
+			System.out.println("IN");
+			try {
+				if (hora1.equals(hora2)) {
+					System.out.println("hora1: " + hora1);
+					System.out.println("hora2: " + hora2);
+					cumpleCaso = true;
+					System.out.println("IGUAL");
+				} else {
+
+					String[] fecha1Arr = hora1.split("-");
+					String[] fecha2Arr = hora2.split("-");
+					SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+					// System.out.println("fecha1Arr: " + fecha1Arr[0] + "," +
+					// fecha1Arr[1]);
+					// System.out.println("fecha2Arr: " + fecha2Arr[0] + "," +
+					// fecha2Arr[1]);
+					// System.out.println((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0]))));
+					// System.out.println((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0]))));
+
+					if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) == 0)
+							&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) > 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 1");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado uno es igual a la primera hora del horario de trabajo del empleado dos");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado uno es después a la segunda hora del horario de trabajo del empleado dos");
+					} else if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) < 0)
+							&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) > 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 2");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado uno es antes de la primera hora del horario de trabajo del empleado dos");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado uno es después a la segunda hora del horario de trabajo del empleado dos");
+					} else if ((dateFormat.parse(fecha1Arr[0]).compareTo(dateFormat.parse(fecha2Arr[0])) < 0)
+							&& (dateFormat.parse(fecha1Arr[1]).compareTo(dateFormat.parse(fecha2Arr[1])) == 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 3");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado uno es antes a la primera hora del horario de trabajo del empleado dos");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado uno es igual a la segunda hora del horario de trabajo del empleado dos");
+					} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) == 0)
+							&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) > 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 4");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado dos es igual a la primera hora del horario de trabajo del empleado uno");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado dos es después de la segunda hora del horario de trabajo del empleado uno");
+					} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) < 0)
+							&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) > 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 5");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado dos es antes a la primera hora del horario de trabajo del empleado uno");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado dos es después de la segunda hora del horario de trabajo del empleado uno");
+					} else if ((dateFormat.parse(fecha2Arr[0]).compareTo(dateFormat.parse(fecha1Arr[0])) < 0)
+							&& (dateFormat.parse(fecha2Arr[1]).compareTo(dateFormat.parse(fecha1Arr[1])) == 0)) {
+						cumpleCaso = true;
+						System.out.println("CASO 6");
+						System.out.println(
+								"Primera hora del horario de trabajo del empleado dos es antes de la primera hora del horario de trabajo del empleado uno");
+						System.out.println(
+								"Segunda hora del horario de trabajo del empleado dos es igual a la segunda hora del horario de trabajo del empleado uno");
+					}
+				}
+			} catch (ParseException ex) {
+			}
+		}
+		return cumpleCaso;
+	}
+
+	public static void frecuencias() {
+		HashMap<String, String[]> map = null;
+		try {
+			map = ManejadorArchivos.leer();
+			System.out.println("\n");
+			HashMap<String, ArrayList<String>> frecuencias = new HashMap<String, ArrayList<String>>();
+			for (String nombreEmpleado1 : map.keySet()) {
+				HashMap<String, String[]> horarios1temp = new HashMap<String, String[]>();
+				horarios1temp.put(nombreEmpleado1, map.get(nombreEmpleado1));
+				for (String nombreEmpleado2 : map.keySet()) {
+					HashMap<String, String[]> horarios2temp = new HashMap<String, String[]>();
+					horarios2temp.put(nombreEmpleado2, map.get(nombreEmpleado2));
+					HashMap<String, ArrayList<String>> comunesHorarios = comunes(horarios1temp, horarios2temp);
+					if (!comunesHorarios.isEmpty()) {
+						for (String s : comunesHorarios.keySet()) {
+							if (!comparar(s, frecuencias)) {
+								frecuencias.put(s, comunesHorarios.get(s));
+							}
+						}
+					}
+				}
+			}
+			for (String paresEmpleados : frecuencias.keySet()) {
+				System.out.println(paresEmpleados + ":" + frecuencias.get(paresEmpleados).size());
+			}
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static boolean comparar(String cadena, HashMap<String, ArrayList<String>> map) {
+
+		String[] data = cadena.split("-");
+		boolean existe = false;
+		if (map.containsKey(cadena)) {
+			existe = true;
+		} else if (map.containsKey(data[1] + "-" + data[0])) {
+			existe = true;
+		}
+
+		return existe;
+
+	}
+
+	public static HashMap<String, ArrayList<String>> comunes_nuevo(HashMap<String, String[]> horarios1,
+			HashMap<String, String[]> horarios2) {
+		HashMap<String, ArrayList<String>> comunes = new HashMap<String, ArrayList<String>>();
+		String nombreEmpleado1 = "";
+		String nombreEmpleado2 = "";
+		for (String nEmpleado1 : horarios1.keySet()) {
+			nombreEmpleado1 = nEmpleado1;
+		}
+		for (String nEmpleado2 : horarios2.keySet()) {
+			nombreEmpleado2 = nEmpleado2;
+		}
+		String[] horariosEmpleado1 = horarios1.get(nombreEmpleado1);
+		String[] horariosEmpleado2 = horarios2.get(nombreEmpleado2);
+		for (int i = 0; i < horariosEmpleado1.length; i++) {
+			for (int j = 0; j < horariosEmpleado2.length; j++) {
+				if (horariosEmpleado1[i].equals(horariosEmpleado2[j])) {
+					if (!nombreEmpleado1.equals(nombreEmpleado2)) {
+						if (!comunes.containsKey(nombreEmpleado1 + "-" + nombreEmpleado2)) {
+							ArrayList<String> temp = new ArrayList<String>();
+							temp.add(horariosEmpleado1[i]);
+							comunes.put(nombreEmpleado1 + "-" + nombreEmpleado2, temp);
+						} else {
+							ArrayList<String> temp = comunes.get(nombreEmpleado1 + "-" + nombreEmpleado2);
+							temp.add(horariosEmpleado1[i]);
+							comunes.put(nombreEmpleado1 + "-" + nombreEmpleado2, temp);
+						}
+					}
+				}
+			}
+		}
+		return comunes;
+	}
+
+	public static HashMap<String, ArrayList<String>> comunes(HashMap<String, String[]> horarios1,
+			HashMap<String, String[]> horarios2) {
+		HashMap<String, ArrayList<String>> comunes = new HashMap<String, ArrayList<String>>();
+
+		String nombreEmpleado1 = "";
+		String nombreEmpleado2 = "";
+
+		for (String nEmpleado1 : horarios1.keySet()) {
+			nombreEmpleado1 = nEmpleado1;
+		}
+
+		for (String nEmpleado2 : horarios2.keySet()) {
+			nombreEmpleado2 = nEmpleado2;
+		}
+
+		String[] horariosEmpleado1 = horarios1.get(nombreEmpleado1);
+		String[] horariosEmpleado2 = horarios2.get(nombreEmpleado2);
+
+		/*
+		System.out.println("horariosEmpleado1: ");
+		for (String s : horariosEmpleado1) {
+			System.out.print(s + ",");
+		}
+
+		System.out.println("\nhorariosEmpleado2: ");
+		for (String s : horariosEmpleado2) {
+			System.out.print(s + ",");
+		}
+		System.out.println();
+		System.out.println("horarios2: " + horarios2);
+		*/
+		for (int i = 0; i < horariosEmpleado1.length; i++) {
+			for (int j = 0; j < horariosEmpleado2.length; j++) {
+				if (validarRangoDeHoras(horariosEmpleado1[i], horariosEmpleado2[j])) {
+					// if (horariosEmpleado1[i].equals(horariosEmpleado2[j])) {
+					if (!nombreEmpleado1.equals(nombreEmpleado2)) {
+						if (!comunes.containsKey(nombreEmpleado1 + "-" + nombreEmpleado2)) {
+							ArrayList<String> temp = new ArrayList<String>();
+							temp.add(horariosEmpleado1[i]);
+							comunes.put(nombreEmpleado1 + "-" + nombreEmpleado2, temp);
+						} else {
+							ArrayList<String> temp = comunes.get(nombreEmpleado1 + "-" + nombreEmpleado2);
+							temp.add(horariosEmpleado1[i]);
+							comunes.put(nombreEmpleado1 + "-" + nombreEmpleado2, temp);
+						}
+
+					}
+				}
+			}
+		}
+
+		return comunes;
+	}
+
+	public static ArrayList<String> comunes2(String[] horarios1, String[] horarios2) {
+
+		ArrayList<String> comunes = new ArrayList<String>();
+		// Horarios1 = ["a", "b", "c", "d"]
+		// Horarios2 = ["b", "c"]
+
+		/*
+		 * RENE=MO10:00-12:00,TU10:00-12:00,TH01:00-03:00,SA14:00-18:00,SU20:00-
+		 * 21:00; ASTRID=MO10:00-12:00,TH12:00-14:00,SU20:00-21:00;
+		 * ANDRES=MO10:00-12:00,TH12:00-14:00,SU20:00-21:00
+		 */
+		// Se le suministra una clave y valor, cosa que
+		// la clave es el nombre y el valor sus horarios
+		// Luego retornar que entre los nombres NAME1-NAME2 los horarios comunes
+		// son
+		for (int i = 0; i < horarios1.length; i++) {
+			for (int j = 0; j < horarios2.length; j++) {
+				if (horarios1[i].equals(horarios2[j])) {
+					comunes.add(horarios1[i]);
+				}
+			}
+		}
+		return comunes;
+	}
+
+	public HashMap<String, Integer> calcularfrecuencias() {
+
+		try {
+			this.horariosEmpleados = ManejadorArchivos.leer();
+
+			// Primero escojo el primer horario
+			for (String clave : this.horariosEmpleados.keySet()) {
+				String[] horario = this.horariosEmpleados.get(clave);
+				// Itero los horarios
+
+				for (String clave2 : this.horariosEmpleados.keySet()) {
+					String[] horario2 = this.horariosEmpleados.get(clave2);
+					int comunes = 0;
+					for (int i = 0; i < horario.length; i++) {
+
+						for (int j = 0; j < horario2.length; j++) {
+
+							if (horario[i].equals(horario2[j])) {
+								if (!clave.equals(clave2)) {
+									if (!this.frecuencias.containsKey(clave + "-" + clave2)
+											&& this.frecuencias.containsKey(clave2 + "-" + clave)) {
+
+									}
+								}
+							}
+
+						}
+					}
+
+				}
+
+			}
+
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+
+		return this.frecuencias;
+
+	}
+
+}

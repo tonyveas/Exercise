@@ -1,0 +1,29 @@
+package test;
+
+import java.util.HashMap;
+
+import servicio.Frecuencias;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		System.out.println("PRUEBA 1");
+		String rutaArchivo1 = "src/archivos/file.txt";
+		String rutaArchivo2 = "src/archivos/file2.txt";
+		String rutaArchivo3 = "src/archivos/file3.txt";
+		Frecuencias.frecuencias(rutaArchivo1);
+		System.out.println("\nPRUEBA 2");
+		Frecuencias.frecuencias(rutaArchivo2);
+		System.out.println("\nPRUEBA 3");
+		Frecuencias.frecuencias(rutaArchivo3);
+		HashMap<String, String[]> map1 = Frecuencias.frecuencias2(rutaArchivo1);
+		HashMap<String, String[]> map2 = Frecuencias.frecuencias2(rutaArchivo2);
+		HashMap<String, String[]> map3 = Frecuencias.frecuencias2(rutaArchivo3);
+		
+		System.out.println();
+		System.out.println(map1);
+		System.out.println(map2);
+		System.out.println(map3);
+
+	}
+}
